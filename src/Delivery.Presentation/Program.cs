@@ -1,13 +1,26 @@
+using Delivery.Domain.Interfaces.Repositories;
+using Delivery.Infrastructure.DataContext;
+using Delivery.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+builder.Services.AddAutoMapper(typeof(PartnerProfile));
+builder.Services.AddScoped<IPartnerRepository, PartnerRepository>();
+
+builder.Services.AddDbContext<ZeDeliveryDbContext>(opt => 
+{
+    var connectionString = builder.Configuration.GetConnectionString("PostgreSQL");
+    opt.UseNpgsql(connectionString, o => o.UseNetTopologySuite());
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -15,5 +28,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();
