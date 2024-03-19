@@ -32,6 +32,17 @@ public sealed class PartnersController : ControllerBase
             {
                 return NotFound(result.Error);
             }
+            // var teste = new{
+            //     Id = result.Data.Id,
+            //     TradingName = result.Data.TradingName,
+            //     OwnerName = result.Data.OwnerName,
+            //     Document = result.Data.Document,
+            //     CoverageArea = result.Data.CoverageArea,
+            //     Address = new{
+            //         Type = result.Data.Address.Type,
+            //         Coordinates = result.Data.Address.Coordinates.CoordinateValue
+            //     }
+            // };
 
             return Ok(result.Data);
         }
