@@ -18,12 +18,5 @@ public sealed class PartnerConfiguration : IEntityTypeConfiguration<Partner>
 
         builder.Property(p => p.AddressId).HasColumnName("addressid");
 
-        // builder.HasOne(p => p.CoverageArea)
-        //     .WithMany()
-        //     .HasForeignKey(p => p.CoverageAreaId);
-
-        // builder.HasOne(p => p.Address)
-        //     .WithMany()
-        //     .HasForeignKey(p => p.AddressId);
     }
 }

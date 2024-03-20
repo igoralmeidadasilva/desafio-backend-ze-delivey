@@ -1,5 +1,3 @@
-using Delivery.Infrastructure.DataContext.Configurations;
-
 namespace Delivery.Infrastructure.DataContext;
 
 public sealed class ZeDeliveryDbContext : DbContext

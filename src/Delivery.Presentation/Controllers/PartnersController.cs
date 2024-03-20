@@ -1,11 +1,3 @@
-using Delivery.Application.Querys.GetNearestPartnerInCoverageArea;
-using Delivery.Application.Querys.GetPartnerById;
-using Delivery.Domain.Dtos;
-using Delivery.Domain.Models;
-using Delivery.Infrastructure.DataContext;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-
 namespace Delivery.Presentation.Controllers;
 
 [Route("/api/[controller]")]
