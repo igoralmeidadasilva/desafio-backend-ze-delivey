@@ -1,3 +1,5 @@
+using NetTopologySuite.Geometries;
+
 namespace Delivery.Application.Querys.GetNearestPartnerInCoverageArea;
 
 public sealed class GetNearestPartnerInCoverageAreaQueryHandler : IRequestHandler<GetNearestPartnerInCoverageAreaQuery, Result<PartnerDto>>
@@ -15,30 +17,29 @@ public sealed class GetNearestPartnerInCoverageAreaQueryHandler : IRequestHandle
 
     public async Task<Result<PartnerDto>> Handle(GetNearestPartnerInCoverageAreaQuery request, CancellationToken cancellationToken)
     {
-        Partner targetPartner = await _repo.GetPartnerById(request.Id);
-        IEnumerable<Partner> partners = await _repo.GetPartnersForComparisonInCoverageArea(request.Id);
-        Partner nearestPartner = await FetchNearestPartnersInCoverageArea(partners, targetPartner);
+        Point location = new(request.Longitude, request.Latitude);
+        IEnumerable<Partner> partners = await _repo.GetPartners();
+        Partner nearestPartner = await FetchNearestPartnersInCoverageArea(partners, location);
 
         if(nearestPartner is null)
         {
-            return Result<PartnerDto>.Failure(PartnerErrors.NearestPartnerNotFound(request.Id));
+            return Result<PartnerDto>.Failure(PartnerErrors.NearestPartnerNotFound());
         }
 
         var mappedResult = _mapper.Map<PartnerDto>(nearestPartner);
         return Result<PartnerDto>.Success(mappedResult);
     }
 
-    private async ValueTask<Partner> FetchNearestPartnersInCoverageArea(IEnumerable<Partner> partners, Partner targetPartner)
+    private async ValueTask<Partner> FetchNearestPartnersInCoverageArea(IEnumerable<Partner> partners, Point targetLocation)
     {
         Partner nearestPartner = null!;
         double shortDistance = double.MaxValue;
         foreach(Partner partner in partners)
         {
-            if(targetPartner.CoverageArea!.Coordinates.Contains(partner.Address!.Coordinates))
+            if(partner.CoverageArea!.Coordinates.Contains(targetLocation))
             {
-                double distance = targetPartner.Address!.Coordinates.Distance(partner.Address.Coordinates);
+                double distance = targetLocation.Distance(partner.Address!.Coordinates);
 
-                // TODO: Debugar esse if
                 if(distance < shortDistance)
                 {
                     shortDistance = distance;

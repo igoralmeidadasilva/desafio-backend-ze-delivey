@@ -2,5 +2,6 @@ namespace Delivery.Application.Querys.GetNearestPartnerInCoverageArea;
 
 public sealed record GetNearestPartnerInCoverageAreaQuery : IRequest<Result<PartnerDto>>
 {
-    public int Id { get; set; }
+    public double Longitude { get; set; }
+    public double Latitude { get; set; }
 }

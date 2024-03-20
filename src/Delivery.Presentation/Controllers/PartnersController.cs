@@ -48,6 +48,8 @@ public sealed class PartnersController : ControllerBase
     {
         try
         {
+            // Longitude de testes: -43.301087 
+            // Latitude de testes: -23.012689 
             Result<PartnerDto> response = await _mediator.Send(request);
             if(response.IsFailure)
             {

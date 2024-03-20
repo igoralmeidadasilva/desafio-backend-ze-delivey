@@ -32,9 +32,9 @@ public sealed class PartnerRepository : IPartnerRepository
         return result!;
     }
 
-    public async Task<IEnumerable<Partner>> GetPartnersForComparisonInCoverageArea(int id)
+    public async Task<IEnumerable<Partner>> GetPartners()
     {
-        var result = await _context.Partners.AsNoTracking().Where(x => x.Id != id).ToListAsync();
+        var result = await _context.Partners.AsNoTracking().ToListAsync();
         foreach (var partner in result)
         {
             partner.Address = await GetAddressById(partner.AddressId);
