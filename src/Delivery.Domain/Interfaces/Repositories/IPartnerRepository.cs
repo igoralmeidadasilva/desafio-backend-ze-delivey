@@ -5,4 +5,6 @@ public interface IPartnerRepository
     Task<Partner> GetPartnerById(int id);
     Task<Address> GetAddressById(int id);
     Task<CoverageArea> GetCoverageAreaById(int id);
+    Task<IEnumerable<Partner>> GetPartnersForComparisonInCoverageArea(int id);
+    
 }

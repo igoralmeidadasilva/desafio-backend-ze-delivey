@@ -1,3 +1,4 @@
+using Delivery.Application.Querys.GetNearestPartnerInCoverageArea;
 using Delivery.Application.Querys.GetPartnerById;
 using Delivery.Domain.Dtos;
 using Delivery.Domain.Models;
@@ -23,28 +24,17 @@ public sealed class PartnersController : ControllerBase
     }
 
     [HttpGet(nameof(PartnerById))]
-    public async Task<ActionResult<PartnerDto>> PartnerById([FromQuery]GetPartnerByIdRequest request)
+    public async Task<ActionResult<PartnerDto>> PartnerById([FromQuery]GetPartnerByIdQuery request)
     {
         try
         {
-            Result<PartnerDto> result = await _mediator.Send(request);
-            if(result.IsFailure)
+            Result<PartnerDto> response = await _mediator.Send(request);
+            if(response.IsFailure)
             {
-                return NotFound(result.Error);
+                return NotFound(response.Error);
             }
-            // var teste = new{
-            //     Id = result.Data.Id,
-            //     TradingName = result.Data.TradingName,
-            //     OwnerName = result.Data.OwnerName,
-            //     Document = result.Data.Document,
-            //     CoverageArea = result.Data.CoverageArea,
-            //     Address = new{
-            //         Type = result.Data.Address.Type,
-            //         Coordinates = result.Data.Address.Coordinates.CoordinateValue
-            //     }
-            // };
 
-            return Ok(result.Data);
+            return Ok(response.Data);
         }
         catch(Exception ex)
         {
@@ -52,5 +42,24 @@ public sealed class PartnersController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     } 
+
+    [HttpGet(nameof(NearestPartnerInCoverageArea))]
+    public async Task<ActionResult<IEnumerable<PartnerDto>>> NearestPartnerInCoverageArea([FromQuery]GetNearestPartnerInCoverageAreaQuery request)
+    {
+        try
+        {
+            Result<PartnerDto> response = await _mediator.Send(request);
+            if(response.IsFailure)
+            {
+                return NotFound(response.Error);
+            }
+            return Ok(response.Data);
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError("Error in class {className} for method {methodName}: {ex}", nameof(PartnersController), nameof(NearestPartnerInCoverageArea), ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
 }
 

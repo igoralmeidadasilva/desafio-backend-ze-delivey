@@ -1,8 +1,3 @@
-using Delivery.Domain.Interfaces.Repositories;
-using Delivery.Infrastructure.DataContext;
-using Delivery.Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
