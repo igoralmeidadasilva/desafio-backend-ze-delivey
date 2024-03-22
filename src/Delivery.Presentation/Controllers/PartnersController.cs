@@ -7,12 +7,9 @@ public sealed class PartnersController : ControllerBase
     private readonly IMediator _mediator;
     private readonly ILogger<PartnersController> _logger;
     private readonly ZeDeliveryDbContext _context;
-    private readonly JsonSerializerOptions _jsonSerializerOptions;
-
+    
     public PartnersController(IMediator mediator, ILogger<PartnersController> logger, ZeDeliveryDbContext context)
     {
-        _jsonSerializerOptions = new JsonSerializerOptions();
-        _jsonSerializerOptions.Converters.Add(new GeoJsonConverterFactory());
         _mediator = mediator;
         _logger = logger;
         _context = context;
