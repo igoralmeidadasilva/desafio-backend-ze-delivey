@@ -11,12 +11,11 @@ public sealed class PartnerRepository : IPartnerRepository
 
     public async Task<Partner> GetPartnerById(int id)
     {
-        var result = await _context.Partners.AsNoTracking().FirstOrDefaultAsync(partner => partner.Id == id);
-        if(result is not null)
-        {
-            result.Address = await GetAddressById(id);
-            result.CoverageArea = await GetCoverageAreaById(id);
-        }
+        var result = await _context.Partners
+            .AsNoTracking()
+            .Include(partner => partner.Address)
+            .Include(partner => partner.CoverageArea)
+            .FirstOrDefaultAsync(partner => partner.Id == id);
         return result!;
     }
 
@@ -34,12 +33,18 @@ public sealed class PartnerRepository : IPartnerRepository
 
     public async Task<IEnumerable<Partner>> GetPartners()
     {
-        var result = await _context.Partners.AsNoTracking().ToListAsync();
-        foreach (var partner in result)
-        {
-            partner.Address = await GetAddressById(partner.AddressId);
-            partner.CoverageArea = await GetCoverageAreaById(partner.CoverageAreaId);
-        }
+        var result = await _context.Partners
+            .AsNoTracking()
+            .Include(partner => partner.Address)
+            .Include(partner => partner.CoverageArea)
+            .ToListAsync();
         return result!;
+    }
+
+    public async Task<int> InsertPartner(Partner partner)
+    {
+        _ = _context.Partners.Add(partner);
+        await _context.SaveChangesAsync();
+        return partner.Id;
     }
 }

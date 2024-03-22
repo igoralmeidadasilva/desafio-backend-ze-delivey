@@ -8,4 +8,6 @@ public abstract record EntityBase<T> where T : EntityBase<T>
     {
         Id = id;
     }
+    protected EntityBase()
+    { }
 }

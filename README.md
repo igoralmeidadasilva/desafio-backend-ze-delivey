@@ -7,13 +7,20 @@ Este projeto é uma solução para o desafio de backend proposto pela equipe do 
 
 2. Dada uma localização pelo usuário da API (coordenadas de longitude e latitude), busca o parceiro mais próximo cuja área de cobertura inclua a localização fornecida.
 
-## 💻 Pré-requisitos
-* Linguagem de Programação: Utilizou-se .NET 8, uma tecnologia recente que oferece recursos avançados e alta performance.
-* Banco de Dados: PostgreSQL foi escolhido como o mecanismo de base de dados para este projeto.
-* Práticas Modernas:
+3. Cadastrar um parceiro.
+
+
+## 🐱‍🏍Práticas Modernas:
   * Clean Architecture: A aplicação segue os princípios da Clean Architecture, garantindo a separação clara de responsabilidades entre as camadas.
   * CQRS (Command Query Responsibility Segregation): Utilizado para separar operações de leitura e escrita, melhorando a escalabilidade e a manutenção do código.
   * Result Pattern: Adotado para retornar resultados de operações de forma consistente e padronizada.
+
+
+## 💻 Pré-requisitos
+* [.NET 8](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0).
+* [PostgreSQL](https://www.postgresql.org/).
+* Extensão [PostGIS](https://postgis.net/) instalada no Postgres.
+
 
 ## 🤞 Executando o Projeto Localmente
 Para executar o projeto localmente, siga estas etapas:
@@ -23,6 +30,7 @@ Para executar o projeto localmente, siga estas etapas:
 * Configurar o Banco de Dados:
 
   * Instale o PostgreSQL em sua máquina, se ainda não o tiver.
+  * Instale a extensão Postgis para lidar com dados Geoespaciais.
   * Crie um banco de dados utilizando os scripts presentes em [Create Table](./docs/create_tables.sql).
   * Insira os registros presentes em [Inserts](./docs/inserts.sql)
   * Configurar a sua ConnectionString no appsettings.json.
@@ -151,6 +159,89 @@ Para executar o projeto localmente, siga estas etapas:
   }
 }
 ```
+### CreatePartner
+
+**Método:** HTTPPOST
+
+**URL:** /api/Partners/NearestPartnerInCoverageArea?Longitude={longitude}&Latitude={latitude}
+
+**Parâmetros:** Longitude e Latitude
+
+**Exemplo:** /api/Partners/CreatePartner
+
+```json
+{
+  "tradingName": "Noiz Cerveja",
+  "ownerName": "Eduardo Pedroso",
+  "document": "15.187.572/0001-07",
+  "coverageArea": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+            [
+              [
+                  -48.03104,
+                  -21.94007
+              ],
+              [
+                  -47.98538,
+                  -22.01027
+              ],
+              [
+                  -47.91568,
+                  -22.06644
+              ],
+              [
+                  -47.87345,
+                  -22.07105
+              ],
+              [
+                  -47.83397,
+                  -22.06357
+              ],
+              [
+                  -47.80136,
+                  -22.03493
+              ],
+              [
+                  -47.79071,
+                  -21.99738
+              ],
+              [
+                  -47.81303,
+                  -21.94994
+              ],
+              [
+                  -47.858,
+                  -21.91586
+              ],
+              [
+                  -47.95688,
+                  -21.90217
+              ],
+              [
+                  -47.99739,
+                  -21.91379
+              ],
+              [
+                  -48.03104,
+                  -21.94007
+              ]
+            ]
+        ]
+      ]
+  },
+  "address": {
+      "type": "Point",
+      "coordinates": [
+        -47.896477,
+        -21.99916
+      ]
+  }
+}
+```
+**Resposta:**
+Id que foi cadastrado no banco.
 
 ## 😄 Seja um dos contribuidores
 

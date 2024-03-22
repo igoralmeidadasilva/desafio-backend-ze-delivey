@@ -3,7 +3,4 @@ global using Delivery.Domain.Entites;
 global using Delivery.Domain.Interfaces.Repositories;
 global using Delivery.Infrastructure.DataContext;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-
-
-
+global using Delivery.Infrastructure.DataContext.Configurations;

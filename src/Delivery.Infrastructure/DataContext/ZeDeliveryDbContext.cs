@@ -1,5 +1,3 @@
-using Delivery.Infrastructure.DataContext.Configurations;
-
 namespace Delivery.Infrastructure.DataContext;
 
 public sealed class ZeDeliveryDbContext : DbContext
@@ -15,10 +13,8 @@ public sealed class ZeDeliveryDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresExtension("postgis");
-
         modelBuilder.ApplyConfiguration(new PartnerConfiguration());
         modelBuilder.ApplyConfiguration(new AddressConfiguration());
         modelBuilder.ApplyConfiguration(new CoverageAreaConfiguration());        
     }
-
 }

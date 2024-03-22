@@ -1,11 +1,8 @@
-using NetTopologySuite.Geometries;
-
 namespace Delivery.Application.Querys.GetNearestPartnerInCoverageArea;
 
 public sealed class GetNearestPartnerInCoverageAreaQueryHandler : IRequestHandler<GetNearestPartnerInCoverageAreaQuery, Result<PartnerDto>>
 {
     private readonly ILogger<GetNearestPartnerInCoverageAreaQueryHandler> _logger;
-
     private readonly IPartnerRepository _repo;
     private IMapper _mapper;
     public GetNearestPartnerInCoverageAreaQueryHandler(ILogger<GetNearestPartnerInCoverageAreaQueryHandler> logger, IPartnerRepository repo, IMapper mapper)

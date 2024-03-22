@@ -1,5 +1,3 @@
-using NetTopologySuite.Geometries;
-
 namespace Delivery.Domain.Dtos;
 
 public readonly record struct CoverageAreaDto
