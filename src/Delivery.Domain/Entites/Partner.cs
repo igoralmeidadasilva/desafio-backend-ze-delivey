@@ -23,4 +23,13 @@ public record Partner : EntityBase<Partner>
         CoverageAreaId = coverageAreaId;
         AddressId = addressId;
     }
+
+    public Partner(string tradingName,
+                   string ownerName,
+                   string document)
+    {
+        TradingName = tradingName;
+        OwnerName = ownerName;
+        Document = document;
+    }
 }

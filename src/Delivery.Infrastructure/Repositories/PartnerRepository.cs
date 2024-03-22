@@ -40,4 +40,11 @@ public sealed class PartnerRepository : IPartnerRepository
             .ToListAsync();
         return result!;
     }
+
+    public async Task<int> InsertPartner(Partner partner)
+    {
+        _ = _context.Partners.Add(partner);
+        await _context.SaveChangesAsync();
+        return partner.Id;
+    }
 }

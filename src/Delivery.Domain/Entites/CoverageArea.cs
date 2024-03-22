@@ -9,4 +9,10 @@ public sealed record CoverageArea : EntityBase<CoverageArea>
         Type = type;
         Coordinates = coordinates;
     }
+
+    public CoverageArea(string type, MultiPolygon coordinates)
+    {
+        Type = type;
+        Coordinates = coordinates;
+    }
 }

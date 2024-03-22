@@ -10,4 +10,10 @@ public sealed record Address : EntityBase<Address>
         Type = type;
         Coordinates = coordinates;
     }
+
+    public Address(string type, Point coordinates)
+    {
+        Type = type;
+        Coordinates = coordinates;
+    }
 }

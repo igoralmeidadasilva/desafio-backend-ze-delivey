@@ -1,3 +1,7 @@
+using System.Text.Json;
+using Delivery.Application.Commands.CreatePartner;
+using NetTopologySuite.IO.Converters;
+
 namespace Delivery.Presentation.Controllers;
 
 [Route("/api/[controller]")]
@@ -7,12 +11,34 @@ public sealed class PartnersController : ControllerBase
     private readonly IMediator _mediator;
     private readonly ILogger<PartnersController> _logger;
     private readonly ZeDeliveryDbContext _context;
+    private readonly JsonSerializerOptions _jsonSerializerOptions;
 
     public PartnersController(IMediator mediator, ILogger<PartnersController> logger, ZeDeliveryDbContext context)
     {
+        _jsonSerializerOptions = new JsonSerializerOptions();
+        _jsonSerializerOptions.Converters.Add(new GeoJsonConverterFactory());
         _mediator = mediator;
         _logger = logger;
         _context = context;
+    }
+
+    [HttpPost(nameof(CreatePartner))]
+    public async Task<ActionResult<int>> CreatePartner([FromBody]CreatePartnerCommand request)
+    {
+        try
+        {
+            var response = await _mediator.Send(request);
+            if(response.IsFailure)
+            {
+                return BadRequest(response.Error);
+            }
+            return Created("Success! Partner receive ID: {id}", response.Data);
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError("Error in class {className} for method {methodName}: {ex}", nameof(PartnersController), nameof(CreatePartner), ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
 
     [HttpGet(nameof(PartnerById))]
