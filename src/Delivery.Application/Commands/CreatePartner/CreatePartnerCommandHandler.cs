@@ -13,12 +13,10 @@ public class CreatePartnerCommandHandler : IRequestHandler<CreatePartnerCommand,
         _mapper = mapper;
     }
 
-
     public async Task<Result<int>> Handle(CreatePartnerCommand request, CancellationToken cancellationToken)
     {
         var mappedRequest = _mapper.Map<Partner>(request);
         var response = await _repo.InsertPartner(mappedRequest);
         return Result<int>.Success(response);
     }
-
 }

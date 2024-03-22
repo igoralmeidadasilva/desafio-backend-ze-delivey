@@ -1,7 +1,3 @@
-using System.Text.Json;
-using Delivery.Application.Commands.CreatePartner;
-using NetTopologySuite.IO.Converters;
-
 namespace Delivery.Presentation.Controllers;
 
 [Route("/api/[controller]")]

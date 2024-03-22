@@ -1,6 +1,6 @@
 namespace Delivery.Domain.Dtos;
 
-public record PartnerDto
+public sealed record PartnerDto
 {
     public string? TradingName { get; init; }
     public string? OwnerName { get; init; }

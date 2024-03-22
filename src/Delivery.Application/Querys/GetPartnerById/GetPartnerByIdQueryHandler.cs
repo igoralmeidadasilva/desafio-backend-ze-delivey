@@ -27,5 +27,4 @@ public sealed class GetPartnerByIdQueryHandler : IRequestHandler<GetPartnerByIdQ
         
         return Result<PartnerDto>.Success(partner);
     }
-    
 }

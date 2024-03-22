@@ -9,3 +9,7 @@ global using Delivery.Domain.Dtos;
 global using Delivery.Domain.Models;
 global using MediatR;
 global using Microsoft.AspNetCore.Mvc;
+global using System.Text.Json;
+global using Delivery.Application.Commands.CreatePartner;
+global using NetTopologySuite.IO.Converters;
+global using System.Text.Json.Serialization;
