@@ -39,6 +39,11 @@ public sealed class PartnersController : ControllerBase
     {
         try
         {
+            _logger.LogInformation(
+                "Start {@MethodName}: Fetching Partner with Id {@PartnerIOd}",
+                nameof(PartnersController),
+                request.Id);
+                
             Result<PartnerDto> response = await _mediator.Send(request);
             if(response.IsFailure)
             {
