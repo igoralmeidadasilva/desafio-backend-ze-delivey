@@ -1,3 +1,5 @@
+//using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers()
@@ -6,6 +8,8 @@ builder.Services.AddControllers()
     options.JsonSerializerOptions.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
 });
 
+// builder.Host.UseSerilog((context, configuration) => 
+//     configuration.ReadFrom.Configuration(context.Configuration));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -29,6 +33,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//app.UseSerilogRequestLogging();
 app.MapControllers();
 
 app.Run();
